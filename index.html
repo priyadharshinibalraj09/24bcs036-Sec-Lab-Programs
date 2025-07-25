@@ -3,38 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess The Number</title>
+    <title>Functional Calculator</title>
+    <style>
+        body{
+            font-family: Arial,sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input,select,button{
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        #result{
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight:bold;
+            color: darkgreen;
+        }
+    </style>
 </head>
 <body>
-    <h2>Guess The Number Game:</h2>
-    <input 
-    type="number"
-    id="mainInput" 
-    placeholder="Enter the guess number"/>
-    <br/><br>
-    <button onclick="guessGame()">Guess</button>
-    <br/>
-    <p id="feedback"></p>
-    <br/>
-    <p id="attempts"></p>
+    <h2>Functional Calculator</h2>
+    <input type="number" id="num1" placeholder="Enter first number">
+    <input type="number" id="num2" placeholder="Enter second number">
 
+    <select id="operation">
+        <option value="add">Add (+)</option>
+        <option value="subtract">Subtract (-)</option>
+        <option value="multiply">Multiply (*)</option>
+        <option value="divide">Divide (/)</option>
+    </select>
+
+    <button onclick="Calculator()">Calculator</button>
+    <div id="result">Result:</div>
     <script>
-             let target = Math.floor(Math.random()*100)+1;
-             let count = 0;
+        function Calculator(){
+            const num1 = parseFloat(document.getElementById("num1").value);
+            const num2 = parseFloat(document.getElementById("num2").value);
+            const operation = document.getElementById("operation").value;
 
-             function guessGame() {
-                let guess = parseInt(document.getElementById("mainInput").value);
-                count++;
+            let result;
+            if(isNaN(num1) || isNaN(num2)){
+                result = "Please enter Valid number.";
+            }else{
+                switch(operation){
+                    case "add":
+                        result = num1+num2;
+                        break;
+                    case "subtract":
+                        result = num1-num2;
+                        break;
+                    case "multiply":
+                        result = num1*num2;
+                        break;
+                    case "divide":
+                        if(num2 === 0){
+                        result = "cannot divided by zero!.";
+                        }else{
+                            result = num1/num2;
+                        }
+                        break;
 
-                if(guess < target){
-                    document.getElementById("feedback").innerText="Too Low";
-                }else if(guess > target){
-                    document.getElementById("feedback").innerText="Too High";
-                }else{
-                    document.getElementById("feedback").innerText="Correct!";
-                    document.getElementById("attempts").innerText="you guessed it in" + count + "attempts.";
+                    default:
+                       result = "Invalid operation";
                 }
             }
+            document.getElementById("result").innerText="Result: " + result;
+        }    
+        
     </script>
 </body>
 </html>
